@@ -2,3 +2,11 @@ img/
 PingPongByGracek333.bpr
 PingPongByGracek333.res
 Unit1.dfm
+Unit1.~cpp
+Unit1.~dfm
+Unit1.~h
+PingPongByGracek333.exe
+PingPongByGracek333.obj
+PingPongByGracek333.tds
+Unit1.obj
+.gitignore
