@@ -73,13 +73,21 @@ void __fastcall TPingPong::moveBallTimer(TObject *Sender)
         ball->Top+ball->Height/2 <= leftRacket->Top+leftRacket->Height &&
         ball->Left <= leftRacket->Left+leftRacket->Width)
     {
+        ball->Left=leftRacket->Left+leftRacket->Width;
         x =- x;
     }
     if (ball->Top+ball->Height/2 >= rightRacket->Top &&
         ball->Top+ball->Height/2 <= rightRacket->Top+rightRacket->Height&&
         ball->Left+ball->Width > rightRacket->Left)
     {
+        ball->Left=rightRacket->Left-ball->Width;
         x =- x;
+    }
+
+    if (ball->Left >= rightRacket->Left+rightRacket->Width || ball->Left+ball->Width <= leftRacket->Left+leftRacket->Width)
+    {
+        moveBall->Enabled = false;
+        ball->Visible = false;
     }
 }
 //---------------------------------------------------------------------------
