@@ -69,6 +69,18 @@ void __fastcall TPingPong::moveBallTimer(TObject *Sender)
     if (ball->Top-5 <= background->Top) y =- y;
     if (ball->Top+ball->Height+5 >= background->Height) y =- y;
 
+    if (ball->Top+ball->Height/2 >= leftRacket->Top &&
+        ball->Top+ball->Height/2 <= leftRacket->Top+leftRacket->Height &&
+        ball->Left <= leftRacket->Left+leftRacket->Width)
+    {
+        x =- x;
+    }
+    if (ball->Top+ball->Height/2 >= rightRacket->Top &&
+        ball->Top+ball->Height/2 <= rightRacket->Top+rightRacket->Height&&
+        ball->Left+ball->Width > rightRacket->Left)
+    {
+        x =- x;
+    }
 }
 //---------------------------------------------------------------------------
 
