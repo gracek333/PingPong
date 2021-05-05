@@ -35,6 +35,7 @@ __published:	// IDE-managed Components
           TShiftState Shift);
         void __fastcall FormKeyUp(TObject *Sender, WORD &Key,
           TShiftState Shift);
+        void __fastcall moveBallTimer(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
         __fastcall TPingPong(TComponent* Owner);
