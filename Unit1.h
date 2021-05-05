@@ -7,16 +7,32 @@
 #include <Controls.hpp>
 #include <StdCtrls.hpp>
 #include <Forms.hpp>
+#include <ExtCtrls.hpp>
+#include <Graphics.hpp>
 //---------------------------------------------------------------------------
-class TForm1 : public TForm
+class TPingPong : public TForm
 {
 __published:	// IDE-managed Components
+        TButton *newGameButton;
+        TButton *nextRoundButton;
+        TShape *backgroundShape;
+        TImage *ball;
+        TLabel *titleLabel;
+        TLabel *resultLabel;
+        TLabel *amountOfPassesLabel;
+        TImage *leftRacket;
+        TImage *rightRacket;
+        TTimer *shiftUpLeftRacket;
+        TTimer *shiftDownLeftRacket;
+        TTimer *moveBall;
+        TTimer *shiftUpRightRacket;
+        TTimer *shiftDownRightRacket;
 private:	// User declarations
 public:		// User declarations
-        __fastcall TForm1(TComponent* Owner);
+        __fastcall TPingPong(TComponent* Owner);
 };
 //---------------------------------------------------------------------------
-extern PACKAGE TForm1 *Form1;
+extern PACKAGE TPingPong *PingPong;
 //---------------------------------------------------------------------------
 #endif
  
