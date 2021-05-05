@@ -8,6 +8,10 @@
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 TPingPong *PingPong;
+
+    int x = -5;
+    int y = -5;
+
 //---------------------------------------------------------------------------
 __fastcall TPingPong::TPingPong(TComponent* Owner)
         : TForm(Owner)
@@ -54,6 +58,37 @@ void __fastcall TPingPong::FormKeyUp(TObject *Sender, WORD &Key,
     if (Key == 0x41) shiftUpLeftRacket->Enabled = false;
     if (Key == VK_DOWN) shiftDownRightRacket->Enabled = false;
     if (Key == 0x5A) shiftDownLeftRacket->Enabled = false;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TPingPong::moveBallTimer(TObject *Sender)
+{
+    ball->Left += x;
+    ball->Top += y;
+
+    if (ball->Top-5 <= background->Top) y =- y;
+    if (ball->Top+ball->Height+5 >= background->Height) y =- y;
+
+    if (ball->Top+ball->Height/2 >= leftRacket->Top &&
+        ball->Top+ball->Height/2 <= leftRacket->Top+leftRacket->Height &&
+        ball->Left <= leftRacket->Left+leftRacket->Width)
+    {
+        ball->Left=leftRacket->Left+leftRacket->Width;
+        x =- x;
+    }
+    if (ball->Top+ball->Height/2 >= rightRacket->Top &&
+        ball->Top+ball->Height/2 <= rightRacket->Top+rightRacket->Height&&
+        ball->Left+ball->Width > rightRacket->Left)
+    {
+        ball->Left=rightRacket->Left-ball->Width;
+        x =- x;
+    }
+
+    if (ball->Left >= rightRacket->Left+rightRacket->Width || ball->Left+ball->Width <= leftRacket->Left+leftRacket->Width)
+    {
+        moveBall->Enabled = false;
+        ball->Visible = false;
+    }
 }
 //---------------------------------------------------------------------------
 
