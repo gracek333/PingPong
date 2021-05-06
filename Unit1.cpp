@@ -12,6 +12,9 @@ TPingPong *PingPong;
     int x = -5;
     int y = -5;
     int amountOfPasses = 0;
+    int pointsOfLeftRacket = 0;
+    int pointsOfRightRacket = 0;
+    AnsiString whoPassedAsLast = "rightRacket";
 
 //---------------------------------------------------------------------------
 __fastcall TPingPong::TPingPong(TComponent* Owner)
@@ -77,6 +80,7 @@ void __fastcall TPingPong::moveBallTimer(TObject *Sender)
         ball->Left=leftRacket->Left+leftRacket->Width;
         x =- x;
         amountOfPasses++;
+        whoPassedAsLast = "leftRacket";
     }
     if (ball->Top+ball->Height/2 >= rightRacket->Top &&
         ball->Top+ball->Height/2 <= rightRacket->Top+rightRacket->Height&&
@@ -85,16 +89,40 @@ void __fastcall TPingPong::moveBallTimer(TObject *Sender)
         ball->Left=rightRacket->Left-ball->Width;
         x =- x;
         amountOfPasses++;
+        whoPassedAsLast = "rightRacket";
     }
 
     if (ball->Left >= rightRacket->Left+rightRacket->Width || ball->Left+ball->Width <= leftRacket->Left+leftRacket->Width)
     {
-        newGameButton->Visible = true;
+        moveBall->Enabled = false;
+        ball->Visible = false;
+        
+        if (whoPassedAsLast == "leftRacket")
+        {
+            titleLabel->Caption = "< Punkt dla gracza";
+            pointsOfLeftRacket++;
+        }
+        else
+        {
+            titleLabel->Caption = "Punkt dla gracza >";
+            pointsOfRightRacket++;
+        }
+        titleLabel->Left = background->Width/2-titleLabel->Width/2;
+        titleLabel->Visible = true;
+
+        resultLabel->Left = background->Width/2-resultLabel->Width/2;
+        resultLabel->Caption = IntToStr(pointsOfLeftRacket)+":"+IntToStr(pointsOfRightRacket);
+        resultLabel->Visible = true;
+
         amountOfPassesLabel->Left = background->Width/2-amountOfPassesLabel->Width/2;
         amountOfPassesLabel->Caption = "Iloœæ odbiæ: " + IntToStr(amountOfPasses);
         amountOfPassesLabel->Visible = true;
-        moveBall->Enabled = false;
-        ball->Visible = false;
+
+        nextRoundButton->Left = background->Width/2-nextRoundButton->Width/2;
+        nextRoundButton->Visible = true;
+
+        newGameButton->Left = background->Width/2-newGameButton->Width/2;
+        newGameButton->Visible = true;
     }
 }
 //---------------------------------------------------------------------------
@@ -115,6 +143,8 @@ void __fastcall TPingPong::newGameButtonClick(TObject *Sender)
     newGameButton->Visible = false;
     titleLabel->Visible = false;
     amountOfPassesLabel->Visible = false;
+    nextRoundButton->Visible = false;
+    resultLabel->Visible = false;
 }
 //---------------------------------------------------------------------------
 
