@@ -11,6 +11,7 @@ TPingPong *PingPong;
 
     int x = -5;
     int y = -5;
+    int amountOfPasses = 0;
 
 //---------------------------------------------------------------------------
 __fastcall TPingPong::TPingPong(TComponent* Owner)
@@ -75,6 +76,7 @@ void __fastcall TPingPong::moveBallTimer(TObject *Sender)
     {
         ball->Left=leftRacket->Left+leftRacket->Width;
         x =- x;
+        amountOfPasses++;
     }
     if (ball->Top+ball->Height/2 >= rightRacket->Top &&
         ball->Top+ball->Height/2 <= rightRacket->Top+rightRacket->Height&&
@@ -82,10 +84,15 @@ void __fastcall TPingPong::moveBallTimer(TObject *Sender)
     {
         ball->Left=rightRacket->Left-ball->Width;
         x =- x;
+        amountOfPasses++;
     }
 
     if (ball->Left >= rightRacket->Left+rightRacket->Width || ball->Left+ball->Width <= leftRacket->Left+leftRacket->Width)
     {
+        newGameButton->Visible = true;
+        amountOfPassesLabel->Left = background->Width/2-amountOfPassesLabel->Width/2;
+        amountOfPassesLabel->Caption = "Iloœæ odbiæ: " + IntToStr(amountOfPasses);
+        amountOfPassesLabel->Visible = true;
         moveBall->Enabled = false;
         ball->Visible = false;
     }
@@ -100,11 +107,14 @@ void __fastcall TPingPong::newGameButtonClick(TObject *Sender)
     leftRacket->Top = background->Height/2-leftRacket->Height/2;
     rightRacket->Top = background->Height/2-rightRacket->Height/2;
     rightRacket->Left = background->Width-69-rightRacket->Width;
+
     ball->Visible = true;
     moveBall->Enabled = true;
     x = -5; y = -5;
+    amountOfPasses = 0;
     newGameButton->Visible = false;
     titleLabel->Visible = false;
+    amountOfPassesLabel->Visible = false;
 }
 //---------------------------------------------------------------------------
 
