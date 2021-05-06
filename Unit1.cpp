@@ -104,6 +104,7 @@ void __fastcall TPingPong::newGameButtonClick(TObject *Sender)
     moveBall->Enabled = true;
     x = -5; y = -5;
     newGameButton->Visible = false;
+    titleLabel->Visible = false;
 }
 //---------------------------------------------------------------------------
 
