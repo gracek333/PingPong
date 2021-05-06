@@ -92,3 +92,18 @@ void __fastcall TPingPong::moveBallTimer(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
+void __fastcall TPingPong::newGameButtonClick(TObject *Sender)
+{
+    ball->Left = background->Width/2;
+    ball->Top = background->Height/2;
+
+    leftRacket->Top = background->Height/2-leftRacket->Height/2;
+    rightRacket->Top = background->Height/2-rightRacket->Height/2;
+    rightRacket->Left = background->Width-69-rightRacket->Width;
+    ball->Visible = true;
+    moveBall->Enabled = true;
+    x = -5; y = -5;
+    newGameButton->Visible = false;
+}
+//---------------------------------------------------------------------------
+
