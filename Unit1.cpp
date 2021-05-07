@@ -22,6 +22,18 @@ TPingPong *PingPong;
 __fastcall TPingPong::TPingPong(TComponent* Owner)
         : TForm(Owner)
 {
+    AnsiString welcome = "Witaj w grze PingPong.";
+    AnsiString controlFirstSentence = "Lewy gracz steruje wciskaj¹c klawisze A oraz Z.";
+    AnsiString controlSecondSentence = "Prawy gracz steruje wciskaj¹c strza³ki do góry i w dó³.";
+    AnsiString additivesFirstSentence = "Dla urozmaicenia zabawy:";
+    AnsiString additivesSecondSentence = "Kiedy odbijesz pi³kê na œrodku rakietki, wówczas zmienisz jej k¹t odbicia i pi³ka przyœpieszy.";
+    AnsiString additivesThirdSentence = "Im d³u¿ej odbijasz, tym pi³ka szybciej siê przemieszcza.";
+    AnsiString additivesFourthSentence = "Mo¿esz dowolnie zmieniaæ pole gry.";
+
+    ShowMessage(welcome + sLineBreak + sLineBreak + controlFirstSentence + sLineBreak +
+                controlSecondSentence + sLineBreak + sLineBreak + additivesFirstSentence + sLineBreak +
+                additivesSecondSentence + sLineBreak + additivesThirdSentence + sLineBreak +
+                additivesFourthSentence);
 }
 //---------------------------------------------------------------------------
 
