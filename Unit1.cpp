@@ -189,6 +189,11 @@ void __fastcall TPingPong::moveBallTimer(TObject *Sender)
 
 void __fastcall TPingPong::newGameButtonClick(TObject *Sender)
 {
+    if ((pointsOfLeftRacket == 0 && pointsOfRightRacket == 0) ||
+    //((pointsOfLeftRacket>0||pointsOfRightRacket>0) &&
+    (Application -> MessageBox("Czy na pewno chcesz zacz¹æ od nowa?","PotwierdŸ",
+    MB_YESNO | MB_ICONQUESTION) == IDYES))
+    {
     ball->Left = background->Width/2;
     ball->Top = background->Height/2;
 
@@ -207,6 +212,7 @@ void __fastcall TPingPong::newGameButtonClick(TObject *Sender)
     amountOfPassesLabel->Visible = false;
     nextRoundButton->Visible = false;
     resultLabel->Visible = false;
+    }
 }
 //---------------------------------------------------------------------------
 
@@ -229,6 +235,9 @@ void __fastcall TPingPong::nextRoundButtonClick(TObject *Sender)
         whoPassedAsLast = "leftRacket";
     }
 
+    leftRacket->Top = background->Height/2-leftRacket->Height/2;
+    rightRacket->Top = background->Height/2-rightRacket->Height/2;
+    rightRacket->Left = background->Width-70-rightRacket->Width;
     titleLabel->Visible = false;
     resultLabel->Visible = false;
     amountOfPassesLabel->Visible = false;
