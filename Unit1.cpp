@@ -75,7 +75,7 @@ void __fastcall TPingPong::moveBallTimer(TObject *Sender)
 
     if (ball->Top+ball->Height/2 >= leftRacket->Top &&
         ball->Top+ball->Height/2 <= leftRacket->Top+leftRacket->Height &&
-        ball->Left <= leftRacket->Left+leftRacket->Width)
+        ball->Left <= leftRacket->Left+leftRacket->Width-8)
     {
         ball->Left=leftRacket->Left+leftRacket->Width;
         x =- x;
@@ -84,7 +84,7 @@ void __fastcall TPingPong::moveBallTimer(TObject *Sender)
     }
     if (ball->Top+ball->Height/2 >= rightRacket->Top &&
         ball->Top+ball->Height/2 <= rightRacket->Top+rightRacket->Height&&
-        ball->Left+ball->Width > rightRacket->Left)
+        ball->Left+ball->Width >= rightRacket->Left+8)
     {
         ball->Left=rightRacket->Left-ball->Width;
         x =- x;
@@ -134,7 +134,7 @@ void __fastcall TPingPong::newGameButtonClick(TObject *Sender)
 
     leftRacket->Top = background->Height/2-leftRacket->Height/2;
     rightRacket->Top = background->Height/2-rightRacket->Height/2;
-    rightRacket->Left = background->Width-69-rightRacket->Width;
+    rightRacket->Left = background->Width-70-rightRacket->Width;
 
     ball->Visible = true;
     moveBall->Enabled = true;
@@ -145,6 +145,32 @@ void __fastcall TPingPong::newGameButtonClick(TObject *Sender)
     amountOfPassesLabel->Visible = false;
     nextRoundButton->Visible = false;
     resultLabel->Visible = false;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TPingPong::nextRoundButtonClick(TObject *Sender)
+{
+    ball->Left = background->Width/2;
+    ball->Top = background->Height/2;
+    amountOfPasses = 0;
+    ball->Visible =  true;
+    if (whoPassedAsLast == "leftRacket")
+    {
+        x = -5; y = -5;
+        whoPassedAsLast = "rightRacket";
+    }
+    else
+    {
+        x = 5; y = 5;
+        whoPassedAsLast = "leftRacket";
+    }
+
+    titleLabel->Visible = false;
+    resultLabel->Visible = false;
+    amountOfPassesLabel->Visible = false;
+    nextRoundButton->Visible = false;
+    newGameButton->Visible = false;
+    moveBall->Enabled = true;
 }
 //---------------------------------------------------------------------------
 
