@@ -12,9 +12,11 @@ TPingPong *PingPong;
     int x = -5;
     int y = -5;
     int amountOfPasses = 0;
+    int previousAmountOfPasses = 0;
     int pointsOfLeftRacket = 0;
     int pointsOfRightRacket = 0;
     AnsiString whoPassedAsLast = "rightRacket";
+    bool speedUpBall = false;
 
 //---------------------------------------------------------------------------
 __fastcall TPingPong::TPingPong(TComponent* Owner)
@@ -76,20 +78,78 @@ void __fastcall TPingPong::moveBallTimer(TObject *Sender)
     if (ball->Top+ball->Height/2 >= leftRacket->Top &&
         ball->Top+ball->Height/2 <= leftRacket->Top+leftRacket->Height &&
         ball->Left <= leftRacket->Left+leftRacket->Width-8)
-    {
-        ball->Left=leftRacket->Left+leftRacket->Width;
-        x =- x;
-        amountOfPasses++;
-        whoPassedAsLast = "leftRacket";
-    }
+        {
+            if (ball->Top+ball->Height/2 >= leftRacket->Top+leftRacket->Height/2 - 35 &&
+                ball->Top+ball->Height/2 <= leftRacket->Top+leftRacket->Height/2 + 35)
+            {
+                ball->Left=leftRacket->Left+leftRacket->Width;
+                if (speedUpBall)
+                {
+                    x =- x;
+                }
+                else
+                {
+                    x =- 2*x;
+                }
+                speedUpBall = true;
+            }
+            else
+            {
+                ball->Left=leftRacket->Left+leftRacket->Width;
+                if (speedUpBall)
+                {
+                    x =- x/2;
+                    speedUpBall = false;
+                }
+                else
+                {
+                    x =- x;
+                }
+            }
+                amountOfPasses++;
+                whoPassedAsLast = "leftRacket";
+        }
+
     if (ball->Top+ball->Height/2 >= rightRacket->Top &&
         ball->Top+ball->Height/2 <= rightRacket->Top+rightRacket->Height&&
         ball->Left+ball->Width >= rightRacket->Left+8)
     {
-        ball->Left=rightRacket->Left-ball->Width;
-        x =- x;
+        if (ball->Top+ball->Height/2 >= rightRacket->Top+rightRacket->Height/2 - 35 &&
+        ball->Top+ball->Height/2 <= rightRacket->Top+rightRacket->Height/2 + 35)
+        {
+            ball->Left=rightRacket->Left-ball->Width;
+            if (speedUpBall)
+            {
+                x =- x;
+            }
+            else
+            {
+                x =- 2*x;
+            }
+            speedUpBall = true;
+        }
+        else
+        {
+            ball->Left=rightRacket->Left-ball->Width;
+            if (speedUpBall)
+            {
+                x =- x/2;
+                speedUpBall = false;
+            }
+            else
+            {
+                x =- x;
+            }
+        }
         amountOfPasses++;
         whoPassedAsLast = "rightRacket";
+    }
+
+    if (amountOfPasses > 0 && amountOfPasses%3==0 && amountOfPasses != previousAmountOfPasses && !speedUpBall)
+    {
+        x = 1.5*x;
+        y = 1.5*y;
+        previousAmountOfPasses = amountOfPasses;
     }
 
     if (ball->Left >= rightRacket->Left+rightRacket->Width || ball->Left+ball->Width <= leftRacket->Left+leftRacket->Width)
@@ -140,6 +200,8 @@ void __fastcall TPingPong::newGameButtonClick(TObject *Sender)
     moveBall->Enabled = true;
     x = -5; y = -5;
     amountOfPasses = 0;
+    previousAmountOfPasses = 0;
+    speedUpBall = false;
     newGameButton->Visible = false;
     titleLabel->Visible = false;
     amountOfPassesLabel->Visible = false;
@@ -153,6 +215,8 @@ void __fastcall TPingPong::nextRoundButtonClick(TObject *Sender)
     ball->Left = background->Width/2;
     ball->Top = background->Height/2;
     amountOfPasses = 0;
+    previousAmountOfPasses = 0;
+    speedUpBall = false;
     ball->Visible =  true;
     if (whoPassedAsLast == "leftRacket")
     {
